@@ -21,6 +21,7 @@ install="$pkgname.pre-install $pkgname.pre-deinstall $pkgname.post-deinstall"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-dbg $pkgname-openrc"
 source="https://github.com/FRRouting/frr/archive/$pkgname-$pkgver.tar.gz
     make-check-bypass-isisd-tlv.patch
+    frr-init
     "
 builddir="$srcdir"/$pkgname-$pkgname-$pkgver
 
@@ -59,8 +60,8 @@ package() {
 
 	install -Dm644 "$builddir"/tools/etc/frr/daemons "$pkgdir"$_sysconfdir
 	install -Dm644 "$builddir"/tools/etc/frr/daemons.conf "$pkgdir"$_sysconfdir
-	install -d "$pkgdir"/etc/init.d
-	ln -s ${_sbindir}/frr "$pkgdir"/etc/init.d/frr
+	install -Dm755 "$srcdir"/frr-init "$pkgdir"/etc/init.d/frr
 }
 sha512sums="e2a3a4e21998f8c85b59fc971190d0b5340bbcd88356a637740ad8e564275b0df14da78b72a24a99a58435725cded1b9089814fc926a7a4080bd3a8762973548  frr-5.0.1.tar.gz
-3c679b857018d82443abd34823e712a8657a597b4210730d260e9796516982a137234354422cb439989985367531d600e205d3fb791cdb7b212425bb704c2016  make-check-bypass-isisd-tlv.patch"
+3c679b857018d82443abd34823e712a8657a597b4210730d260e9796516982a137234354422cb439989985367531d600e205d3fb791cdb7b212425bb704c2016  make-check-bypass-isisd-tlv.patch
+739668ab81da17a5b4d8af64ee83fda37f745ccdaa87912a809d35d23937a8039d93b9f57d2d8fb1e9971ecaee075d2ad2ee381797626eb3da205bc5c08adaec  frr-init"
